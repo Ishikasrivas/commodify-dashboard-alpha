@@ -9,6 +9,7 @@ import { ThemeProvider } from "./contexts/ThemeContext";
 import { ProtectedRoute } from "./components/ProtectedRoute";
 import { Layout } from "./components/Layout";
 import { Login } from "./pages/Login";
+import { RoleSelection } from "./pages/RoleSelection";
 import { Dashboard } from "./pages/Dashboard";
 import { Products } from "./pages/Products";
 import { AddProduct } from "./pages/AddProduct";
@@ -26,6 +27,7 @@ const App = () => (
           <BrowserRouter>
             <Routes>
               <Route path="/login" element={<Login />} />
+              <Route path="/role-selection" element={<RoleSelection />} />
               <Route path="/" element={<Navigate to="/dashboard" replace />} />
               
               {/* Protected Routes */}

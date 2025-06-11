@@ -23,7 +23,9 @@ export interface AuthContextType {
   user: User | null;
   session: any;
   login: (email: string, password: string) => Promise<{ error?: any }>;
+  loginWithGoogle: () => Promise<{ error?: any }>;
   signup: (email: string, password: string, name: string) => Promise<{ error?: any }>;
+  updateUserRole: (role: 'manager' | 'storekeeper') => Promise<{ error?: any }>;
   logout: () => Promise<void>;
   isAuthenticated: boolean;
   loading: boolean;

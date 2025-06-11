@@ -7,7 +7,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Loader2, Lock } from 'lucide-react';
+import { Loader2, Lock, Mail } from 'lucide-react';
 
 export const Login: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -18,7 +18,7 @@ export const Login: React.FC = () => {
   const [isSignup, setIsSignup] = useState(false);
   const [success, setSuccess] = useState('');
   
-  const { login, signup } = useAuth();
+  const { login, loginWithGoogle, signup } = useAuth();
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -44,7 +44,7 @@ export const Login: React.FC = () => {
         if (error) {
           setError(error.message);
         } else {
-          navigate('/dashboard');
+          navigate('/role-selection');
         }
       }
     } catch (err) {
@@ -54,24 +54,42 @@ export const Login: React.FC = () => {
     }
   };
 
+  const handleGoogleLogin = async () => {
+    setIsLoading(true);
+    setError('');
+    
+    try {
+      const { error } = await loginWithGoogle();
+      if (error) {
+        setError(error.message);
+      }
+    } catch (err) {
+      setError('An unexpected error occurred during Google login.');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800 p-4">
-      <Card className="w-full max-w-md">
-        <CardHeader className="text-center">
-          <div className="mx-auto mb-4 w-12 h-12 bg-primary rounded-full flex items-center justify-center">
-            <Lock className="h-6 w-6 text-primary-foreground" />
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 p-4">
+      <Card className="w-full max-w-md shadow-2xl border-0 bg-white/80 backdrop-blur-sm dark:bg-gray-900/80">
+        <CardHeader className="text-center pb-6">
+          <div className="mx-auto mb-6 w-16 h-16 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full flex items-center justify-center shadow-lg">
+            <Lock className="h-8 w-8 text-white" />
           </div>
-          <CardTitle className="text-2xl">Commodities Management</CardTitle>
-          <p className="text-muted-foreground">
-            {isSignup ? 'Create your account' : 'Sign in to your account'}
+          <CardTitle className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+            Commodities Management
+          </CardTitle>
+          <p className="text-muted-foreground mt-2">
+            {isSignup ? 'Create your account' : 'Welcome back! Sign in to continue'}
           </p>
         </CardHeader>
         
-        <CardContent>
+        <CardContent className="space-y-6">
           <form onSubmit={handleSubmit} className="space-y-4">
             {isSignup && (
               <div className="space-y-2">
-                <Label htmlFor="name">Full Name</Label>
+                <Label htmlFor="name" className="text-sm font-medium">Full Name</Label>
                 <Input
                   id="name"
                   type="text"
@@ -80,12 +98,13 @@ export const Login: React.FC = () => {
                   placeholder="Enter your full name"
                   required
                   disabled={isLoading}
+                  className="h-11"
                 />
               </div>
             )}
             
             <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
+              <Label htmlFor="email" className="text-sm font-medium">Email</Label>
               <Input
                 id="email"
                 type="email"
@@ -94,11 +113,12 @@ export const Login: React.FC = () => {
                 placeholder="Enter your email"
                 required
                 disabled={isLoading}
+                className="h-11"
               />
             </div>
             
             <div className="space-y-2">
-              <Label htmlFor="password">Password</Label>
+              <Label htmlFor="password" className="text-sm font-medium">Password</Label>
               <Input
                 id="password"
                 type="password"
@@ -108,28 +128,52 @@ export const Login: React.FC = () => {
                 required
                 disabled={isLoading}
                 minLength={6}
+                className="h-11"
               />
             </div>
 
             {error && (
-              <Alert variant="destructive">
-                <AlertDescription>{error}</AlertDescription>
+              <Alert variant="destructive" className="border-red-200 bg-red-50 dark:bg-red-900/20">
+                <AlertDescription className="text-red-800 dark:text-red-200">{error}</AlertDescription>
               </Alert>
             )}
 
             {success && (
-              <Alert>
-                <AlertDescription>{success}</AlertDescription>
+              <Alert className="border-green-200 bg-green-50 dark:bg-green-900/20">
+                <AlertDescription className="text-green-800 dark:text-green-200">{success}</AlertDescription>
               </Alert>
             )}
 
-            <Button type="submit" className="w-full" disabled={isLoading}>
+            <Button 
+              type="submit" 
+              className="w-full h-11 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 transition-all duration-200 shadow-lg" 
+              disabled={isLoading}
+            >
               {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
               {isSignup ? 'Create Account' : 'Sign In'}
             </Button>
           </form>
 
-          <div className="mt-4 text-center">
+          <div className="relative">
+            <div className="absolute inset-0 flex items-center">
+              <span className="w-full border-t border-gray-200 dark:border-gray-700" />
+            </div>
+            <div className="relative flex justify-center text-xs uppercase">
+              <span className="bg-white dark:bg-gray-900 px-2 text-muted-foreground">Or continue with</span>
+            </div>
+          </div>
+
+          <Button
+            onClick={handleGoogleLogin}
+            variant="outline"
+            className="w-full h-11 border-gray-200 hover:bg-gray-50 dark:border-gray-700 dark:hover:bg-gray-800 transition-all duration-200"
+            disabled={isLoading}
+          >
+            <Mail className="mr-2 h-4 w-4" />
+            Continue with Google
+          </Button>
+
+          <div className="text-center">
             <Button
               variant="link"
               onClick={() => {
@@ -138,23 +182,13 @@ export const Login: React.FC = () => {
                 setSuccess('');
               }}
               disabled={isLoading}
+              className="text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300"
             >
               {isSignup 
                 ? 'Already have an account? Sign in' 
                 : "Don't have an account? Sign up"
               }
             </Button>
-          </div>
-
-          <div className="mt-6 p-4 bg-muted rounded-lg">
-            <p className="text-sm font-medium mb-2">Test Accounts:</p>
-            <div className="text-xs space-y-1">
-              <p><strong>Manager:</strong> manager@test.com / password123</p>
-              <p><strong>Store Keeper:</strong> keeper@test.com / password123</p>
-              <p className="text-muted-foreground mt-2">
-                Or create new accounts with emails containing "manager" for manager role
-              </p>
-            </div>
           </div>
         </CardContent>
       </Card>
