@@ -39,7 +39,12 @@ export const Products: React.FC = () => {
       if (error) {
         console.error('Error fetching products:', error);
       } else {
-        setProducts(data || []);
+        // Type assertion to ensure the status field matches our Product type
+        const typedProducts = (data || []).map(product => ({
+          ...product,
+          status: product.status as Product['status']
+        }));
+        setProducts(typedProducts);
       }
     } catch (error) {
       console.error('Error:', error);
