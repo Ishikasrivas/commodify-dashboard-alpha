@@ -10,79 +10,43 @@ import {
   Plus, 
   Edit, 
   Package,
-  Filter
+  Filter,
+  Loader2
 } from 'lucide-react';
 import { Product } from '../types';
 import { useAuth } from '../contexts/AuthContext';
+import { supabase } from '@/integrations/supabase/client';
 
 export const Products: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [filterCategory, setFilterCategory] = useState('all');
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
   const { user } = useAuth();
 
-  // Mock data - in real app, this would come from an API
   useEffect(() => {
-    const mockProducts: Product[] = [
-      {
-        id: '1',
-        name: 'Organic Coffee Beans',
-        category: 'Beverages',
-        price: 24.99,
-        quantity: 150,
-        supplier: 'Green Mountain Co.',
-        description: 'Premium organic coffee beans from sustainable farms',
-        lastUpdated: '2024-01-15',
-        status: 'in-stock'
-      },
-      {
-        id: '2',
-        name: 'Premium Tea Leaves',
-        category: 'Beverages',
-        price: 18.50,
-        quantity: 8,
-        supplier: 'Tea Gardens Ltd.',
-        description: 'High-quality loose leaf tea varieties',
-        lastUpdated: '2024-01-14',
-        status: 'low-stock'
-      },
-      {
-        id: '3',
-        name: 'Specialty Spices Set',
-        category: 'Seasonings',
-        price: 32.00,
-        quantity: 0,
-        supplier: 'Spice World Inc.',
-        description: 'Curated collection of exotic spices',
-        lastUpdated: '2024-01-13',
-        status: 'out-of-stock'
-      },
-      {
-        id: '4',
-        name: 'Himalayan Salt',
-        category: 'Seasonings',
-        price: 12.75,
-        quantity: 200,
-        supplier: 'Mountain Minerals',
-        description: 'Pure pink Himalayan rock salt',
-        lastUpdated: '2024-01-12',
-        status: 'in-stock'
-      },
-      {
-        id: '5',
-        name: 'Quinoa Grain',
-        category: 'Grains',
-        price: 15.99,
-        quantity: 45,
-        supplier: 'Healthy Grains Co.',
-        description: 'Organic quinoa for healthy meals',
-        lastUpdated: '2024-01-11',
-        status: 'in-stock'
-      }
-    ];
-    setProducts(mockProducts);
+    fetchProducts();
   }, []);
+
+  const fetchProducts = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('products')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+      if (error) {
+        console.error('Error fetching products:', error);
+      } else {
+        setProducts(data || []);
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const filteredProducts = products.filter(product => {
     const matchesSearch = product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -113,6 +77,15 @@ export const Products: React.FC = () => {
       default: return 'Unknown';
     }
   };
+
+  if (loading) {
+    return (
+      <div className="p-6 flex items-center justify-center">
+        <Loader2 className="h-8 w-8 animate-spin" />
+        <span className="ml-2">Loading products...</span>
+      </div>
+    );
+  }
 
   return (
     <div className="p-6 space-y-6">
@@ -183,7 +156,7 @@ export const Products: React.FC = () => {
                 </div>
                 <div>
                   <span className="font-medium">Quantity:</span>
-                  <p className={`font-bold ${product.quantity < 10 ? 'text-red-600' : 'text-foreground'}`}>
+                  <p className={`font-bold ${product.quantity < 50 ? 'text-red-600' : 'text-foreground'}`}>
                     {product.quantity}
                   </p>
                 </div>
@@ -195,7 +168,7 @@ export const Products: React.FC = () => {
               </div>
               
               <div className="text-xs text-muted-foreground">
-                Last updated: {new Date(product.lastUpdated).toLocaleDateString()}
+                Last updated: {new Date(product.updated_at).toLocaleDateString()}
               </div>
               
               <div className="flex gap-2 pt-2">

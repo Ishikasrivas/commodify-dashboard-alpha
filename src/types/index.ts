@@ -14,15 +14,19 @@ export interface Product {
   quantity: number;
   supplier: string;
   description: string;
-  lastUpdated: string;
+  created_at: string;
+  updated_at: string;
   status: 'in-stock' | 'low-stock' | 'out-of-stock';
 }
 
 export interface AuthContextType {
   user: User | null;
-  login: (email: string, password: string) => Promise<boolean>;
-  logout: () => void;
+  session: any;
+  login: (email: string, password: string) => Promise<{ error?: any }>;
+  signup: (email: string, password: string, name: string) => Promise<{ error?: any }>;
+  logout: () => Promise<void>;
   isAuthenticated: boolean;
+  loading: boolean;
 }
 
 export interface ThemeContextType {

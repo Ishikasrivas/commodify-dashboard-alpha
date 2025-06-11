@@ -12,26 +12,43 @@ import { Loader2, Lock } from 'lucide-react';
 export const Login: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [name, setName] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
+  const [isSignup, setIsSignup] = useState(false);
+  const [success, setSuccess] = useState('');
   
-  const { login } = useAuth();
+  const { login, signup } = useAuth();
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
     setError('');
+    setSuccess('');
 
     try {
-      const success = await login(email, password);
-      if (success) {
-        navigate('/dashboard');
+      if (isSignup) {
+        const { error } = await signup(email, password, name);
+        if (error) {
+          setError(error.message);
+        } else {
+          setSuccess('Account created successfully! Please check your email to verify your account.');
+          setIsSignup(false);
+          setEmail('');
+          setPassword('');
+          setName('');
+        }
       } else {
-        setError('Invalid email or password');
+        const { error } = await login(email, password);
+        if (error) {
+          setError(error.message);
+        } else {
+          navigate('/dashboard');
+        }
       }
     } catch (err) {
-      setError('Login failed. Please try again.');
+      setError('An unexpected error occurred.');
     } finally {
       setIsLoading(false);
     }
@@ -45,11 +62,28 @@ export const Login: React.FC = () => {
             <Lock className="h-6 w-6 text-primary-foreground" />
           </div>
           <CardTitle className="text-2xl">Commodities Management</CardTitle>
-          <p className="text-muted-foreground">Sign in to your account</p>
+          <p className="text-muted-foreground">
+            {isSignup ? 'Create your account' : 'Sign in to your account'}
+          </p>
         </CardHeader>
         
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
+            {isSignup && (
+              <div className="space-y-2">
+                <Label htmlFor="name">Full Name</Label>
+                <Input
+                  id="name"
+                  type="text"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  placeholder="Enter your full name"
+                  required
+                  disabled={isLoading}
+                />
+              </div>
+            )}
+            
             <div className="space-y-2">
               <Label htmlFor="email">Email</Label>
               <Input
@@ -73,6 +107,7 @@ export const Login: React.FC = () => {
                 placeholder="Enter your password"
                 required
                 disabled={isLoading}
+                minLength={6}
               />
             </div>
 
@@ -82,18 +117,43 @@ export const Login: React.FC = () => {
               </Alert>
             )}
 
+            {success && (
+              <Alert>
+                <AlertDescription>{success}</AlertDescription>
+              </Alert>
+            )}
+
             <Button type="submit" className="w-full" disabled={isLoading}>
               {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-              Sign In
+              {isSignup ? 'Create Account' : 'Sign In'}
             </Button>
           </form>
 
+          <div className="mt-4 text-center">
+            <Button
+              variant="link"
+              onClick={() => {
+                setIsSignup(!isSignup);
+                setError('');
+                setSuccess('');
+              }}
+              disabled={isLoading}
+            >
+              {isSignup 
+                ? 'Already have an account? Sign in' 
+                : "Don't have an account? Sign up"
+              }
+            </Button>
+          </div>
+
           <div className="mt-6 p-4 bg-muted rounded-lg">
-            <p className="text-sm font-medium mb-2">Demo Credentials:</p>
+            <p className="text-sm font-medium mb-2">Test Accounts:</p>
             <div className="text-xs space-y-1">
-              <p><strong>Manager:</strong> manager@company.com</p>
-              <p><strong>Store Keeper:</strong> keeper@company.com</p>
-              <p><strong>Password:</strong> password123</p>
+              <p><strong>Manager:</strong> manager@test.com / password123</p>
+              <p><strong>Store Keeper:</strong> keeper@test.com / password123</p>
+              <p className="text-muted-foreground mt-2">
+                Or create new accounts with emails containing "manager" for manager role
+              </p>
             </div>
           </div>
         </CardContent>
