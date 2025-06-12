@@ -1,167 +1,123 @@
-
-import React from 'react';
+// src/pages/Dashboard.tsx
+import {
+  BarChart, Bar, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer
+} from 'recharts';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
-import { 
-  Package, 
-  TrendingUp, 
-  AlertTriangle, 
-  DollarSign,
-  Users,
-  ShoppingCart
-} from 'lucide-react';
+import { useTheme } from 'next-themes';
+import { useEffect, useState } from 'react';
 
-export const Dashboard: React.FC = () => {
-  const stats = [
-    {
-      title: 'Total Products',
-      value: '1,234',
-      change: '+12%',
-      icon: Package,
-      color: 'text-blue-600 dark:text-blue-400'
-    },
-    {
-      title: 'Total Revenue',
-      value: '$45,678',
-      change: '+8%',
-      icon: DollarSign,
-      color: 'text-green-600 dark:text-green-400'
-    },
-    {
-      title: 'Low Stock Items',
-      value: '23',
-      change: '-5%',
-      icon: AlertTriangle,
-      color: 'text-orange-600 dark:text-orange-400'
-    },
-    {
-      title: 'Active Suppliers',
-      value: '45',
-      change: '+3%',
-      icon: Users,
-      color: 'text-purple-600 dark:text-purple-400'
-    }
-  ];
+const sampleData = [
+  { name: 'Jan', traffic: 4000, store: 2400, subscribers: 2400, unsubscribe: 200 },
+  { name: 'Feb', traffic: 3000, store: 1398, subscribers: 2210, unsubscribe: 300 },
+  { name: 'Mar', traffic: 2000, store: 9800, subscribers: 2290, unsubscribe: 150 },
+  { name: 'Apr', traffic: 2780, store: 3908, subscribers: 2000, unsubscribe: 400 },
+  { name: 'May', traffic: 1890, store: 4800, subscribers: 2181, unsubscribe: 350 },
+  { name: 'Jun', traffic: 2390, store: 3800, subscribers: 2500, unsubscribe: 300 },
+  { name: 'Jul', traffic: 3490, store: 4300, subscribers: 2100, unsubscribe: 250 },
+];
 
-  const recentActivity = [
-    { action: 'Product Added', item: 'Organic Coffee Beans', time: '2 hours ago' },
-    { action: 'Stock Updated', item: 'Premium Tea Leaves', time: '4 hours ago' },
-    { action: 'New Supplier', item: 'Green Valley Farms', time: '1 day ago' },
-    { action: 'Product Sold', item: 'Specialty Spices Set', time: '1 day ago' }
-  ];
+export default function Dashboard() {
+  const [mounted, setMounted] = useState(false);
+  const { resolvedTheme } = useTheme();
 
-  const topProducts = [
-    { name: 'Organic Coffee Beans', sales: 234, revenue: '$4,680' },
-    { name: 'Premium Tea Leaves', sales: 187, revenue: '$3,740' },
-    { name: 'Specialty Spices', sales: 156, revenue: '$3,120' },
-    { name: 'Himalayan Salt', sales: 143, revenue: '$2,860' }
-  ];
+  useEffect(() => setMounted(true), []);
+  if (!mounted) return null;
+
+  const cardClass = "rounded-2xl p-6 bg-background shadow-lg border border-border text-foreground";
 
   return (
     <div className="p-6 space-y-6">
-      <div className="flex justify-between items-center">
-        <h1 className="text-3xl font-bold text-foreground">Manager Dashboard</h1>
-        <div className="text-sm text-muted-foreground">
-          Last updated: {new Date().toLocaleString()}
-        </div>
-      </div>
-
-      {/* Stats Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {stats.map((stat, index) => (
-          <Card key={index} className="hover:shadow-lg transition-shadow">
-            <CardContent className="p-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm font-medium text-muted-foreground">
-                    {stat.title}
-                  </p>
-                  <p className="text-2xl font-bold text-foreground">
-                    {stat.value}
-                  </p>
-                  <p className={`text-sm ${stat.change.startsWith('+') ? 'text-green-600' : 'text-red-600'}`}>
-                    {stat.change} from last month
-                  </p>
-                </div>
-                <stat.icon className={`h-8 w-8 ${stat.color}`} />
-              </div>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
-
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Recent Activity */}
-        <Card>
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+        <Card className={cardClass}>
           <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <TrendingUp className="h-5 w-5" />
-              Recent Activity
-            </CardTitle>
+            <CardTitle>Estimated Earning</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="space-y-4">
-              {recentActivity.map((activity, index) => (
-                <div key={index} className="flex items-center justify-between p-3 bg-muted rounded-lg">
-                  <div>
-                    <p className="font-medium text-foreground">{activity.action}</p>
-                    <p className="text-sm text-muted-foreground">{activity.item}</p>
-                  </div>
-                  <span className="text-xs text-muted-foreground">{activity.time}</span>
-                </div>
-              ))}
-            </div>
+            <p className="text-3xl font-bold">$112,893.00</p>
+            <p className="text-sm text-green-500">+70.5% ↑ from last month</p>
           </CardContent>
         </Card>
 
-        {/* Top Products */}
-        <Card>
+        <Card className={cardClass}>
           <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <ShoppingCart className="h-5 w-5" />
-              Top Selling Products
-            </CardTitle>
+            <CardTitle>Estimated Sale</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="space-y-4">
-              {topProducts.map((product, index) => (
-                <div key={index} className="flex items-center justify-between p-3 bg-muted rounded-lg">
-                  <div>
-                    <p className="font-medium text-foreground">{product.name}</p>
-                    <p className="text-sm text-muted-foreground">{product.sales} units sold</p>
-                  </div>
-                  <span className="font-bold text-green-600">{product.revenue}</span>
-                </div>
-              ))}
-            </div>
+            <p className="text-3xl font-bold">+112,893.00</p>
+            <p className="text-sm text-green-500">+70.5% ↑ compared to previous</p>
+          </CardContent>
+        </Card>
+
+        <Card className={cardClass}>
+          <CardHeader>
+            <CardTitle>Store Performance</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-2">
+            <ProgressBar label="All Traffic" value={93} color="red" />
+            <ProgressBar label="Your Store" value={93} color="purple" />
+            <ProgressBar label="User Subscriber" value={93} color="green" />
+            <ProgressBar label="Unsubscribe" value={93} color="orange" />
           </CardContent>
         </Card>
       </div>
 
-      {/* Quick Actions */}
-      <Card>
+      <Card className={cardClass}>
         <CardHeader>
-          <CardTitle>Quick Actions</CardTitle>
+          <CardTitle>Traffic Detail</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className="p-4 border border-border rounded-lg hover:bg-muted cursor-pointer transition-colors">
-              <Package className="h-6 w-6 text-primary mb-2" />
-              <h3 className="font-medium">View All Products</h3>
-              <p className="text-sm text-muted-foreground">Manage your inventory</p>
-            </div>
-            <div className="p-4 border border-border rounded-lg hover:bg-muted cursor-pointer transition-colors">
-              <TrendingUp className="h-6 w-6 text-primary mb-2" />
-              <h3 className="font-medium">Sales Report</h3>
-              <p className="text-sm text-muted-foreground">View detailed analytics</p>
-            </div>
-            <div className="p-4 border border-border rounded-lg hover:bg-muted cursor-pointer transition-colors">
-              <AlertTriangle className="h-6 w-6 text-primary mb-2" />
-              <h3 className="font-medium">Low Stock Alert</h3>
-              <p className="text-sm text-muted-foreground">Check items running low</p>
-            </div>
-          </div>
+          <ResponsiveContainer width="100%" height={300}>
+            <BarChart data={sampleData}>
+              <CartesianGrid strokeDasharray="3 3" strokeOpacity={0.2} />
+              <XAxis dataKey="name" stroke="#999" />
+              <YAxis stroke="#999" />
+              <Tooltip />
+              <Legend />
+              <Bar dataKey="traffic" fill="#00FF00" name="All Traffic" />
+              <Bar dataKey="store" fill="#B800FF" name="Your Store" />
+            </BarChart>
+          </ResponsiveContainer>
+        </CardContent>
+      </Card>
+
+      <Card className={cardClass}>
+        <CardHeader>
+          <CardTitle>Newsletter Subscribers</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <ResponsiveContainer width="100%" height={300}>
+            <LineChart data={sampleData}>
+              <CartesianGrid strokeDasharray="3 3" strokeOpacity={0.2} />
+              <XAxis dataKey="name" stroke="#999" />
+              <YAxis stroke="#999" />
+              <Tooltip />
+              <Legend />
+              <Line type="monotone" dataKey="subscribers" stroke="#00FF00" name="User Subscriber" />
+              <Line type="monotone" dataKey="unsubscribe" stroke="#FFA500" name="User Unsubscribe" />
+            </LineChart>
+          </ResponsiveContainer>
         </CardContent>
       </Card>
     </div>
   );
-};
+}
+
+function ProgressBar({ label, value, color }: { label: string; value: number; color: string }) {
+  return (
+    <div>
+      <div className="flex justify-between text-sm font-medium">
+        <span>{label}</span>
+        <span>{value}%</span>
+      </div>
+      <div className="w-full bg-muted h-2 rounded-full mt-1">
+        <div
+          className={`h-2 rounded-full`}
+          style={{
+            width: `${value}%`,
+            backgroundColor: color
+          }}
+        ></div>
+      </div>
+    </div>
+  );
+}

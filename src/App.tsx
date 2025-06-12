@@ -8,10 +8,12 @@ import { AuthProvider } from "./contexts/AuthContext";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import { ProtectedRoute } from "./components/ProtectedRoute";
 import { Layout } from "./components/Layout";
-import { Login } from "./pages/Login";
+import Login from './pages/Login';
+
 import { RoleSelection } from "./pages/RoleSelection";
-import { Dashboard } from "./pages/Dashboard";
-import { Products } from "./pages/Products";
+import  Dashboard from "./pages/Dashboard";
+import Products from './pages/Products';
+import EditProduct from './pages/EditProduct';
 import { AddProduct } from "./pages/AddProduct";
 import NotFound from "./pages/NotFound";
 
@@ -29,7 +31,7 @@ const App = () => (
               <Route path="/login" element={<Login />} />
               <Route path="/role-selection" element={<RoleSelection />} />
               <Route path="/" element={<Navigate to="/dashboard" replace />} />
-              
+
               {/* Protected Routes */}
               <Route element={<Layout />}>
                 <Route
@@ -65,6 +67,8 @@ const App = () => (
                   }
                 />
               </Route>
+              <Route path="/products/edit/:id" element={<EditProduct />} />
+
 
               {/* Catch-all route */}
               <Route path="*" element={<NotFound />} />

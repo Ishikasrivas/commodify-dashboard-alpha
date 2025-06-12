@@ -1,5 +1,4 @@
-
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { Button } from '@/components/ui/button';
@@ -11,20 +10,26 @@ export const RoleSelection: React.FC = () => {
   const [selectedRole, setSelectedRole] = useState<'manager' | 'storekeeper' | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
-  
+
   const { updateUserRole, user } = useAuth();
   const navigate = useNavigate();
 
+  useEffect(() => {
+    if (!user) {
+      navigate('/login');
+    }
+  }, [user, navigate]);
+
   const handleRoleSelection = async () => {
-    if (!selectedRole) return;
-    
+    if (!selectedRole || !user) return;
+
     setIsLoading(true);
     setError('');
 
     try {
       const { error } = await updateUserRole(selectedRole);
       if (error) {
-        setError(error.message);
+        setError(error.message || 'Failed to update role.');
       } else {
         navigate('/dashboard');
       }
@@ -34,11 +39,6 @@ export const RoleSelection: React.FC = () => {
       setIsLoading(false);
     }
   };
-
-  if (!user) {
-    navigate('/login');
-    return null;
-  }
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 p-4">
@@ -54,23 +54,25 @@ export const RoleSelection: React.FC = () => {
             Choose your role to continue to the dashboard
           </p>
         </CardHeader>
-        
+
         <CardContent className="space-y-6">
           <div className="space-y-4">
-            <div 
+            <div
               className={`p-4 border-2 rounded-lg cursor-pointer transition-all duration-200 ${
-                selectedRole === 'manager' 
-                  ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20' 
+                selectedRole === 'manager'
+                  ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20'
                   : 'border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600'
               }`}
               onClick={() => setSelectedRole('manager')}
             >
               <div className="flex items-center space-x-3">
-                <div className={`p-2 rounded-full ${
-                  selectedRole === 'manager' 
-                    ? 'bg-blue-500 text-white' 
-                    : 'bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300'
-                }`}>
+                <div
+                  className={`p-2 rounded-full ${
+                    selectedRole === 'manager'
+                      ? 'bg-blue-500 text-white'
+                      : 'bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300'
+                  }`}
+                >
                   <Shield className="h-5 w-5" />
                 </div>
                 <div>
@@ -82,20 +84,22 @@ export const RoleSelection: React.FC = () => {
               </div>
             </div>
 
-            <div 
+            <div
               className={`p-4 border-2 rounded-lg cursor-pointer transition-all duration-200 ${
-                selectedRole === 'storekeeper' 
-                  ? 'border-purple-500 bg-purple-50 dark:bg-purple-900/20' 
+                selectedRole === 'storekeeper'
+                  ? 'border-purple-500 bg-purple-50 dark:bg-purple-900/20'
                   : 'border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600'
               }`}
               onClick={() => setSelectedRole('storekeeper')}
             >
               <div className="flex items-center space-x-3">
-                <div className={`p-2 rounded-full ${
-                  selectedRole === 'storekeeper' 
-                    ? 'bg-purple-500 text-white' 
-                    : 'bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300'
-                }`}>
+                <div
+                  className={`p-2 rounded-full ${
+                    selectedRole === 'storekeeper'
+                      ? 'bg-purple-500 text-white'
+                      : 'bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300'
+                  }`}
+                >
                   <Package className="h-5 w-5" />
                 </div>
                 <div>
@@ -114,9 +118,9 @@ export const RoleSelection: React.FC = () => {
             </Alert>
           )}
 
-          <Button 
+          <Button
             onClick={handleRoleSelection}
-            className="w-full h-11 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 transition-all duration-200 shadow-lg" 
+            className="w-full h-11 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 transition-all duration-200 shadow-lg"
             disabled={!selectedRole || isLoading}
           >
             {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
@@ -127,3 +131,5 @@ export const RoleSelection: React.FC = () => {
     </div>
   );
 };
+
+export default RoleSelection;

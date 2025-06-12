@@ -9,6 +9,9 @@ import { Textarea } from '@/components/ui/textarea';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { ArrowLeft, Save, Loader2 } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
+import { db } from '@/firebase/firebase';
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+
 
 export const AddProduct: React.FC = () => {
   const navigate = useNavigate();
@@ -61,32 +64,48 @@ export const AddProduct: React.FC = () => {
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    
-    if (!validateForm()) return;
+  e.preventDefault();
 
-    setIsLoading(true);
+  if (!validateForm()) return;
+  setIsLoading(true);
 
-    try {
-      // Mock API call - in real app, this would be an actual API request
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      
-      toast({
-        title: "Product Added Successfully",
-        description: `${formData.name} has been added to the inventory.`,
-      });
-      
-      navigate('/products');
-    } catch (error) {
-      toast({
-        title: "Error",
-        description: "Failed to add product. Please try again.",
-        variant: "destructive",
-      });
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  try {
+    const status =
+      Number(formData.quantity) === 0
+        ? 'out-of-stock'
+        : Number(formData.quantity) <= 5
+        ? 'low-stock'
+        : 'in-stock';
+
+    await addDoc(collection(db, 'products'), {
+      name: formData.name.trim(),
+      category: formData.category,
+      price: Number(formData.price),
+      quantity: Number(formData.quantity),
+      supplier: formData.supplier.trim(),
+      description: formData.description.trim(),
+      updated_at: serverTimestamp(),
+      status: status,
+    });
+
+    toast({
+      title: 'Product Added Successfully',
+      description: `${formData.name} has been added to the inventory.`,
+    });
+
+    navigate('/products');
+  } catch (error) {
+    console.error('Error adding product:', error);
+    toast({
+      title: 'Error',
+      description: 'Failed to add product. Please try again.',
+      variant: 'destructive',
+    });
+  } finally {
+    setIsLoading(false);
+  }
+};
+
 
   return (
     <div className="p-6 max-w-2xl mx-auto space-y-6">

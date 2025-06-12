@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
@@ -17,7 +16,7 @@ export const Login: React.FC = () => {
   const [error, setError] = useState('');
   const [isSignup, setIsSignup] = useState(false);
   const [success, setSuccess] = useState('');
-  
+
   const { login, loginWithGoogle, signup } = useAuth();
   const navigate = useNavigate();
 
@@ -31,9 +30,9 @@ export const Login: React.FC = () => {
       if (isSignup) {
         const { error } = await signup(email, password, name);
         if (error) {
-          setError(error.message);
+          setError(error.message || 'Signup failed.');
         } else {
-          setSuccess('Account created successfully! Please check your email to verify your account.');
+          setSuccess('Account created successfully! Please log in.');
           setIsSignup(false);
           setEmail('');
           setPassword('');
@@ -42,9 +41,9 @@ export const Login: React.FC = () => {
       } else {
         const { error } = await login(email, password);
         if (error) {
-          setError(error.message);
+          setError(error.message || 'Login failed.');
         } else {
-          navigate('/role-selection');
+          await navigate('/role-selection');
         }
       }
     } catch (err) {
@@ -57,11 +56,12 @@ export const Login: React.FC = () => {
   const handleGoogleLogin = async () => {
     setIsLoading(true);
     setError('');
-    
     try {
       const { error } = await loginWithGoogle();
       if (error) {
-        setError(error.message);
+        setError(error.message || 'Google login failed.');
+      } else {
+        await navigate('/role-selection');
       }
     } catch (err) {
       setError('An unexpected error occurred during Google login.');
@@ -84,7 +84,7 @@ export const Login: React.FC = () => {
             {isSignup ? 'Create your account' : 'Welcome back! Sign in to continue'}
           </p>
         </CardHeader>
-        
+
         <CardContent className="space-y-6">
           <form onSubmit={handleSubmit} className="space-y-4">
             {isSignup && (
@@ -102,7 +102,7 @@ export const Login: React.FC = () => {
                 />
               </div>
             )}
-            
+
             <div className="space-y-2">
               <Label htmlFor="email" className="text-sm font-medium">Email</Label>
               <Input
@@ -116,7 +116,7 @@ export const Login: React.FC = () => {
                 className="h-11"
               />
             </div>
-            
+
             <div className="space-y-2">
               <Label htmlFor="password" className="text-sm font-medium">Password</Label>
               <Input
@@ -144,9 +144,9 @@ export const Login: React.FC = () => {
               </Alert>
             )}
 
-            <Button 
-              type="submit" 
-              className="w-full h-11 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 transition-all duration-200 shadow-lg" 
+            <Button
+              type="submit"
+              className="w-full h-11 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 transition-all duration-200 shadow-lg"
               disabled={isLoading}
             >
               {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
@@ -184,8 +184,8 @@ export const Login: React.FC = () => {
               disabled={isLoading}
               className="text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300"
             >
-              {isSignup 
-                ? 'Already have an account? Sign in' 
+              {isSignup
+                ? 'Already have an account? Sign in'
                 : "Don't have an account? Sign up"
               }
             </Button>
@@ -195,3 +195,5 @@ export const Login: React.FC = () => {
     </div>
   );
 };
+
+export default Login;
