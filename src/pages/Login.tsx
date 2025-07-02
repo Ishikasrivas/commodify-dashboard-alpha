@@ -7,8 +7,10 @@ import { Label } from '@/components/ui/label';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Loader2, Lock, Mail } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 export const Login: React.FC = () => {
+  const { t } = useTranslation();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
@@ -32,7 +34,7 @@ export const Login: React.FC = () => {
         if (error) {
           setError(error.message || 'Signup failed.');
         } else {
-          setSuccess('Account created successfully! Please log in.');
+          setSuccess(t('login.accountCreatedSuccess'));
           setIsSignup(false);
           setEmail('');
           setPassword('');
@@ -78,10 +80,10 @@ export const Login: React.FC = () => {
             <Lock className="h-8 w-8 text-white" />
           </div>
           <CardTitle className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-            Commodities Management
+            {t('login.title')}
           </CardTitle>
           <p className="text-muted-foreground mt-2">
-            {isSignup ? 'Create your account' : 'Welcome back! Sign in to continue'}
+            {isSignup ? t('login.createAccount') : t('login.welcome')}
           </p>
         </CardHeader>
 
@@ -89,13 +91,13 @@ export const Login: React.FC = () => {
           <form onSubmit={handleSubmit} className="space-y-4">
             {isSignup && (
               <div className="space-y-2">
-                <Label htmlFor="name" className="text-sm font-medium">Full Name</Label>
+                <Label htmlFor="name" className="text-sm font-medium">{t('login.fullName')}</Label>
                 <Input
                   id="name"
                   type="text"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  placeholder="Enter your full name"
+                  placeholder={t('login.enterFullName')}
                   required
                   disabled={isLoading}
                   className="h-11"
@@ -104,13 +106,13 @@ export const Login: React.FC = () => {
             )}
 
             <div className="space-y-2">
-              <Label htmlFor="email" className="text-sm font-medium">Email</Label>
+              <Label htmlFor="email" className="text-sm font-medium">{t('login.email')}</Label>
               <Input
                 id="email"
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="Enter your email"
+                placeholder={t('login.enterEmail')}
                 required
                 disabled={isLoading}
                 className="h-11"
@@ -118,13 +120,13 @@ export const Login: React.FC = () => {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="password" className="text-sm font-medium">Password</Label>
+              <Label htmlFor="password" className="text-sm font-medium">{t('login.password')}</Label>
               <Input
                 id="password"
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                placeholder="Enter your password"
+                placeholder={t('login.enterPassword')}
                 required
                 disabled={isLoading}
                 minLength={6}
@@ -150,7 +152,7 @@ export const Login: React.FC = () => {
               disabled={isLoading}
             >
               {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-              {isSignup ? 'Create Account' : 'Sign In'}
+              {isSignup ? t('login.createAccountBtn') : t('login.signIn')}
             </Button>
           </form>
 
@@ -159,7 +161,7 @@ export const Login: React.FC = () => {
               <span className="w-full border-t border-gray-200 dark:border-gray-700" />
             </div>
             <div className="relative flex justify-center text-xs uppercase">
-              <span className="bg-white dark:bg-gray-900 px-2 text-muted-foreground">Or continue with</span>
+              <span className="bg-white dark:bg-gray-900 px-2 text-muted-foreground">{t('login.orContinueWith')}</span>
             </div>
           </div>
 
@@ -170,7 +172,7 @@ export const Login: React.FC = () => {
             disabled={isLoading}
           >
             <Mail className="mr-2 h-4 w-4" />
-            Continue with Google
+            {t('login.continueWithGoogle')}
           </Button>
 
           <div className="text-center">
@@ -185,8 +187,8 @@ export const Login: React.FC = () => {
               className="text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300"
             >
               {isSignup
-                ? 'Already have an account? Sign in'
-                : "Don't have an account? Sign up"
+                ? t('login.alreadyHaveAccount')
+                : t('login.dontHaveAccount')
               }
             </Button>
           </div>

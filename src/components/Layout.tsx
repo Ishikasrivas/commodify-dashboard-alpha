@@ -13,7 +13,8 @@ import {
   Moon,
   Menu,
   X,
-  Loader2
+  Loader2,
+  Languages
 } from 'lucide-react';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -35,14 +36,14 @@ export const Layout: React.FC = () => {
     return (
       <div className="min-h-screen flex items-center justify-center bg-background">
         <Loader2 className="h-8 w-8 animate-spin" />
-        <span className="ml-2">Loading...</span>
+        <span className="ml-2">{t('common.loading')}</span>
       </div>
     );
   }
 
   const menuItems = [
     {
-      label: t('dashboard'),
+      label: t('dashboard.title'),
       icon: BarChart3,
       path: '/dashboard',
       roles: ['manager']
@@ -54,7 +55,7 @@ export const Layout: React.FC = () => {
       roles: ['manager', 'storekeeper']
     },
     {
-      label: t('addProduct'),
+      label: t('addProduct.title'),
       icon: Plus,
       path: '/products/add',
       roles: ['manager', 'storekeeper']
@@ -104,7 +105,7 @@ export const Layout: React.FC = () => {
             </nav>
 
             {/* User Info and Actions */}
-            <div className="flex items-center gap-2">
+            <div className="flex items-center space-x-2">
               <Button
                 variant="ghost"
                 size="sm"
@@ -115,9 +116,24 @@ export const Layout: React.FC = () => {
               </Button>
 
               {/* Language Switcher */}
-              <div className="flex gap-1">
-                <Button variant="ghost" size="sm" onClick={() => i18n.changeLanguage('en')}>EN</Button>
-                <Button variant="ghost" size="sm" onClick={() => i18n.changeLanguage('hi')}>हिंदी</Button>
+              <div className="flex items-center gap-1 border rounded-md p-1">
+                <Languages className="h-4 w-4 text-muted-foreground" />
+                <Button 
+                  variant={i18n.language === 'en' ? "default" : "ghost"} 
+                  size="sm" 
+                  onClick={() => i18n.changeLanguage('en')}
+                  className="h-7 px-2 text-xs"
+                >
+                  EN
+                </Button>
+                <Button 
+                  variant={i18n.language === 'hi' ? "default" : "ghost"} 
+                  size="sm" 
+                  onClick={() => i18n.changeLanguage('hi')}
+                  className="h-7 px-2 text-xs"
+                >
+                  हिंदी
+                </Button>
               </div>
 
               <div className="hidden sm:block text-sm text-muted-foreground">
@@ -161,7 +177,7 @@ export const Layout: React.FC = () => {
       </header>
 
       {/* Main Content */}
-      <main className="flex-1">
+      <main>
         <Outlet />
       </main>
     </div>

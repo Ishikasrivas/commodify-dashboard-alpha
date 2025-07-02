@@ -5,8 +5,10 @@ import { Button } from '@/components/ui/button';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Loader2, User, Shield, Package } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 export const RoleSelection: React.FC = () => {
+  const { t } = useTranslation();
   const [selectedRole, setSelectedRole] = useState<'manager' | 'storekeeper' | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
@@ -40,6 +42,15 @@ export const RoleSelection: React.FC = () => {
     }
   };
 
+  if (!user) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-background">
+        <Loader2 className="h-8 w-8 animate-spin" />
+        <span className="ml-2">{t('roleSelection.loading')}</span>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 p-4">
       <Card className="w-full max-w-md shadow-2xl border-0 bg-white/80 backdrop-blur-sm dark:bg-gray-900/80">
@@ -48,11 +59,8 @@ export const RoleSelection: React.FC = () => {
             <User className="h-8 w-8 text-white" />
           </div>
           <CardTitle className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-            Select Your Role
+            {t('roleSelection.selectRole')}
           </CardTitle>
-          <p className="text-muted-foreground mt-2">
-            Choose your role to continue to the dashboard
-          </p>
         </CardHeader>
 
         <CardContent className="space-y-6">
@@ -76,9 +84,9 @@ export const RoleSelection: React.FC = () => {
                   <Shield className="h-5 w-5" />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-lg">Manager</h3>
+                  <h3 className="font-semibold text-lg">{t('roleSelection.manager')}</h3>
                   <p className="text-sm text-muted-foreground">
-                    Full access including dashboard and analytics
+                    {t('roleSelection.managerDescription')}
                   </p>
                 </div>
               </div>
@@ -103,9 +111,9 @@ export const RoleSelection: React.FC = () => {
                   <Package className="h-5 w-5" />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-lg">Store Keeper</h3>
+                  <h3 className="font-semibold text-lg">{t('roleSelection.storekeeper')}</h3>
                   <p className="text-sm text-muted-foreground">
-                    Manage products and inventory
+                    {t('roleSelection.storekeeperDescription')}
                   </p>
                 </div>
               </div>
@@ -124,7 +132,7 @@ export const RoleSelection: React.FC = () => {
             disabled={!selectedRole || isLoading}
           >
             {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-            Continue as {selectedRole === 'manager' ? 'Manager' : 'Store Keeper'}
+            {t('roleSelection.continueAs')} {selectedRole === 'manager' ? t('roleSelection.manager') : t('roleSelection.storekeeper')}
           </Button>
         </CardContent>
       </Card>

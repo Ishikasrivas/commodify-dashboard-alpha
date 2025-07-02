@@ -1,8 +1,104 @@
 {
   "appTitle": "Commodities Management",
-  "dashboard": "Dashboard",
   "viewProducts": "View Products",
   "addProduct": "Add Product",
   "logout": "Logout",
-  "selectLanguage": "Select Language"
+  "selectLanguage": "Select Language",
+  
+  "login": {
+    "title": "Commodities Management",
+    "welcome": "Welcome back! Sign in to continue",
+    "createAccount": "Create your account",
+    "fullName": "Full Name",
+    "email": "Email",
+    "password": "Password",
+    "enterFullName": "Enter your full name",
+    "enterEmail": "Enter your email",
+    "enterPassword": "Enter your password",
+    "signIn": "Sign In",
+    "createAccountBtn": "Create Account",
+    "orContinueWith": "Or continue with",
+    "continueWithGoogle": "Continue with Google",
+    "alreadyHaveAccount": "Already have an account? Sign in",
+    "dontHaveAccount": "Don't have an account? Sign up",
+    "accountCreatedSuccess": "Account created successfully! Please log in."
+  },
+  
+  "roleSelection": {
+    "selectRole": "Choose Your Role",
+    "manager": "Manager",
+    "storekeeper": "Store Keeper",
+    "managerDescription": "Full access including dashboard and analytics",
+    "storekeeperDescription": "Manage products and inventory",
+    "continueAs": "Continue as",
+    "loading": "Loading..."
+  },
+  
+  "dashboard": {
+    "title": "Dashboard",
+    "estimatedEarning": "Estimated Earning",
+    "estimatedSale": "Estimated Sale",
+    "storePerformance": "Store Performance",
+    "trafficDetail": "Traffic Detail",
+    "newsletterSubscribers": "Newsletter Subscribers",
+    "allTraffic": "All Traffic",
+    "yourStore": "Your Store",
+    "userSubscriber": "User Subscriber",
+    "unsubscribe": "Unsubscribe",
+    "fromLastMonth": "from last month",
+    "comparedToPrevious": "compared to previous"
+  },
+  
+  "products": {
+    "title": "Products",
+    "inventoryList": "Inventory List",
+    "name": "Name",
+    "category": "Category",
+    "price": "Price",
+    "quantity": "Quantity",
+    "supplier": "Supplier",
+    "actions": "Actions",
+    "noProductsFound": "No products found.",
+    "deleteConfirm": "Are you sure you want to delete this product?",
+    "productDeletedSuccess": "Product deleted successfully",
+    "deleteFailed": "Delete failed",
+    "failedToLoadProducts": "Failed to load products"
+  },
+  
+  "addProduct": {
+    "title": "Add Product",
+    "editProduct": "Edit Product",
+    "productName": "Product Name",
+    "enterProductName": "Enter product name",
+    "productCategory": "Product Category",
+    "enterCategory": "Enter category",
+    "productPrice": "Product Price",
+    "enterPrice": "Enter price",
+    "productQuantity": "Product Quantity",
+    "enterQuantity": "Enter quantity",
+    "supplierName": "Supplier Name",
+    "enterSupplier": "Enter supplier name",
+    "save": "Save",
+    "cancel": "Cancel",
+    "saving": "Saving...",
+    "productSavedSuccess": "Product saved successfully",
+    "saveFailed": "Failed to save product"
+  },
+  
+  "common": {
+    "loading": "Loading...",
+    "save": "Save",
+    "cancel": "Cancel",
+    "edit": "Edit",
+    "delete": "Delete",
+    "add": "Add",
+    "search": "Search",
+    "filter": "Filter",
+    "export": "Export",
+    "import": "Import",
+    "success": "Success",
+    "error": "Error",
+    "warning": "Warning",
+    "info": "Info"
+  }
 }

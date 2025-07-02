@@ -4,5 +4,102 @@
   "viewProducts": "उत्पाद देखें",
   "addProduct": "उत्पाद जोड़ें",
   "logout": "लॉग आउट",
-  "selectLanguage": "भाषा चुनें"
+  "selectLanguage": "भाषा चुनें",
+  
+  "login": {
+    "title": "उत्पाद प्रबंधन",
+    "welcome": "वापस स्वागत है! जारी रखने के लिए साइन इन करें",
+    "createAccount": "अपना खाता बनाएं",
+    "fullName": "पूरा नाम",
+    "email": "ईमेल",
+    "password": "पासवर्ड",
+    "enterFullName": "अपना पूरा नाम दर्ज करें",
+    "enterEmail": "अपना ईमेल दर्ज करें",
+    "enterPassword": "अपना पासवर्ड दर्ज करें",
+    "signIn": "साइन इन",
+    "createAccountBtn": "खाता बनाएं",
+    "orContinueWith": "या इसके साथ जारी रखें",
+    "continueWithGoogle": "Google के साथ जारी रखें",
+    "alreadyHaveAccount": "पहले से खाता है? साइन इन करें",
+    "dontHaveAccount": "खाता नहीं है? साइन अप करें",
+    "accountCreatedSuccess": "खाता सफलतापूर्वक बनाया गया! कृपया लॉग इन करें।"
+  },
+  
+  "roleSelection": {
+    "selectRole": "अपनी भूमिका चुनें",
+    "manager": "प्रबंधक",
+    "storekeeper": "स्टोर कीपर",
+    "managerDescription": "डैशबोर्ड और एनालिटिक्स सहित पूर्ण पहुंच",
+    "storekeeperDescription": "उत्पादों और इन्वेंटरी का प्रबंधन करें",
+    "continueAs": "इस रूप में जारी रखें",
+    "loading": "लोड हो रहा है..."
+  },
+  
+  "dashboard": {
+    "title": "डैशबोर्ड",
+    "estimatedEarning": "अनुमानित कमाई",
+    "estimatedSale": "अनुमानित बिक्री",
+    "storePerformance": "स्टोर प्रदर्शन",
+    "trafficDetail": "ट्रैफिक विवरण",
+    "newsletterSubscribers": "न्यूज़लेटर सब्स्क्राइबर",
+    "allTraffic": "सभी ट्रैफिक",
+    "yourStore": "आपका स्टोर",
+    "userSubscriber": "उपयोगकर्ता सब्स्क्राइबर",
+    "unsubscribe": "अनसब्स्क्राइब",
+    "fromLastMonth": "पिछले महीने से",
+    "comparedToPrevious": "पिछले की तुलना में"
+  },
+  
+  "products": {
+    "title": "उत्पाद",
+    "inventoryList": "इन्वेंटरी सूची",
+    "name": "नाम",
+    "category": "श्रेणी",
+    "price": "मूल्य",
+    "quantity": "मात्रा",
+    "supplier": "आपूर्तिकर्ता",
+    "actions": "कार्य",
+    "noProductsFound": "कोई उत्पाद नहीं मिला।",
+    "deleteConfirm": "क्या आप वास्तव में इस उत्पाद को हटाना चाहते हैं?",
+    "productDeletedSuccess": "उत्पाद सफलतापूर्वक हटा दिया गया",
+    "deleteFailed": "हटाना असफल",
+    "failedToLoadProducts": "उत्पाद लोड करने में असफल"
+  },
+  
+  "addProduct": {
+    "title": "उत्पाद जोड़ें",
+    "editProduct": "उत्पाद संपादित करें",
+    "productName": "उत्पाद का नाम",
+    "enterProductName": "उत्पाद का नाम दर्ज करें",
+    "productCategory": "उत्पाद श्रेणी",
+    "enterCategory": "श्रेणी दर्ज करें",
+    "productPrice": "उत्पाद मूल्य",
+    "enterPrice": "मूल्य दर्ज करें",
+    "productQuantity": "उत्पाद मात्रा",
+    "enterQuantity": "मात्रा दर्ज करें",
+    "supplierName": "आपूर्तिकर्ता का नाम",
+    "enterSupplier": "आपूर्तिकर्ता का नाम दर्ज करें",
+    "save": "सेव करें",
+    "cancel": "रद्द करें",
+    "saving": "सेव हो रहा है...",
+    "productSavedSuccess": "उत्पाद सफलतापूर्वक सेव किया गया",
+    "saveFailed": "उत्पाद सेव करने में असफल"
+  },
+  
+  "common": {
+    "loading": "लोड हो रहा है...",
+    "save": "सेव करें",
+    "cancel": "रद्द करें",
+    "edit": "संपादित करें",
+    "delete": "हटाएं",
+    "add": "जोड़ें",
+    "search": "खोजें",
+    "filter": "फिल्टर",
+    "export": "निर्यात",
+    "import": "आयात",
+    "success": "सफल",
+    "error": "त्रुटि",
+    "warning": "चेतावनी",
+    "info": "जानकारी"
+  }
 }
