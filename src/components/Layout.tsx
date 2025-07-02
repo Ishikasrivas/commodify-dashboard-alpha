@@ -1,4 +1,4 @@
-
+import i18n from 'i18next';
 import React from 'react';
 import { Outlet, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
@@ -16,8 +16,10 @@ import {
   Loader2
 } from 'lucide-react';
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 export const Layout: React.FC = () => {
+  const { t } = useTranslation();
   const { user, logout, loading } = useAuth();
   const { isDarkMode, toggleTheme } = useTheme();
   const navigate = useNavigate();
@@ -40,19 +42,19 @@ export const Layout: React.FC = () => {
 
   const menuItems = [
     {
-      label: 'Dashboard',
+      label: t('dashboard'),
       icon: BarChart3,
       path: '/dashboard',
       roles: ['manager']
     },
     {
-      label: 'View Products',
+      label: t('viewProducts'),
       icon: Package,
       path: '/products',
       roles: ['manager', 'storekeeper']
     },
     {
-      label: 'Add Product',
+      label: t('addProduct'),
       icon: Plus,
       path: '/products/add',
       roles: ['manager', 'storekeeper']
@@ -82,7 +84,7 @@ export const Layout: React.FC = () => {
                 {isMobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
               </Button>
               <h1 className="text-xl font-bold text-foreground">
-                Commodities Management
+                {t('appTitle')}
               </h1>
             </div>
 
@@ -111,11 +113,17 @@ export const Layout: React.FC = () => {
               >
                 {isDarkMode ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
               </Button>
-              
+
+              {/* Language Switcher */}
+              <div className="flex gap-1">
+                <Button variant="ghost" size="sm" onClick={() => i18n.changeLanguage('en')}>EN</Button>
+                <Button variant="ghost" size="sm" onClick={() => i18n.changeLanguage('hi')}>हिंदी</Button>
+              </div>
+
               <div className="hidden sm:block text-sm text-muted-foreground">
                 {user?.name} ({user?.role})
               </div>
-              
+
               <Button
                 variant="outline"
                 size="sm"
@@ -123,7 +131,7 @@ export const Layout: React.FC = () => {
                 className="flex items-center gap-2"
               >
                 <LogOut className="h-4 w-4" />
-                <span className="hidden sm:inline">Logout</span>
+                <span className="hidden sm:inline">{t('logout')}</span>
               </Button>
             </div>
           </div>
