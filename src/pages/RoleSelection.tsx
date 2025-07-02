@@ -31,12 +31,12 @@ export const RoleSelection: React.FC = () => {
     try {
       const { error } = await updateUserRole(selectedRole);
       if (error) {
-        setError(error.message || 'Failed to update role.');
+        setError(error.message || t('errors.roleUpdateFailed'));
       } else {
         navigate('/dashboard');
       }
     } catch (err) {
-      setError('An unexpected error occurred.');
+      setError(t('errors.unexpectedError'));
     } finally {
       setIsLoading(false);
     }

@@ -41,16 +41,16 @@ export const AddProduct: React.FC = () => {
   const validateForm = () => {
     const newErrors: Record<string, string> = {};
 
-    if (!formData.name.trim()) newErrors.name = 'Product name is required';
-    if (!formData.category) newErrors.category = 'Category is required';
+    if (!formData.name.trim()) newErrors.name = t('addProduct.validationErrors.nameRequired');
+    if (!formData.category) newErrors.category = t('addProduct.validationErrors.categoryRequired');
     if (!formData.price || isNaN(Number(formData.price)) || Number(formData.price) <= 0) {
-      newErrors.price = 'Valid price is required';
+      newErrors.price = t('addProduct.validationErrors.priceRequired');
     }
     if (!formData.quantity || isNaN(Number(formData.quantity)) || Number(formData.quantity) < 0) {
-      newErrors.quantity = 'Valid quantity is required';
+      newErrors.quantity = t('addProduct.validationErrors.quantityRequired');
     }
-    if (!formData.supplier.trim()) newErrors.supplier = 'Supplier is required';
-    if (!formData.description.trim()) newErrors.description = 'Description is required';
+    if (!formData.supplier.trim()) newErrors.supplier = t('addProduct.validationErrors.supplierRequired');
+    if (!formData.description.trim()) newErrors.description = t('addProduct.validationErrors.descriptionRequired');
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -116,14 +116,14 @@ export const AddProduct: React.FC = () => {
           className="flex items-center gap-2"
         >
           <ArrowLeft className="h-4 w-4" />
-          Back to Products
+          {t('addProduct.backToProducts')}
         </Button>
         <h1 className="text-3xl font-bold text-foreground">{t('addProduct.title')}</h1>
       </div>
 
       <Card>
         <CardHeader>
-          <CardTitle>Product Information</CardTitle>
+          <CardTitle>{t('addProduct.productInformation')}</CardTitle>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-6">
@@ -209,12 +209,12 @@ export const AddProduct: React.FC = () => {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="description">Description *</Label>
+              <Label htmlFor="description">{t('addProduct.description')} *</Label>
               <Textarea
                 id="description"
                 value={formData.description}
                 onChange={(e) => handleInputChange('description', e.target.value)}
-                placeholder="Enter product description"
+                placeholder={t('addProduct.enterDescription')}
                 rows={4}
                 className={errors.description ? 'border-red-500' : ''}
               />
@@ -225,7 +225,7 @@ export const AddProduct: React.FC = () => {
 
             <Alert>
               <AlertDescription>
-                All fields marked with * are required. Make sure to provide accurate information for proper inventory management.
+                {t('addProduct.requiredFieldsNote')}
               </AlertDescription>
             </Alert>
 

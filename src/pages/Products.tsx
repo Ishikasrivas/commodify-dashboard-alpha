@@ -100,7 +100,7 @@ const Products: React.FC = () => {
         title: newStatus ? t('products.productBuyingEnabled') : t('products.productBuyingDisabled')
       });
     } catch (err) {
-      toast({ title: 'Failed to update buying status', variant: 'destructive' });
+      toast({ title: t('errors.failedToUpdateBuyingStatus'), variant: 'destructive' });
     }
   };
 
@@ -136,7 +136,7 @@ const Products: React.FC = () => {
         title: newStatus ? t('products.supplierBuyingEnabled') : t('products.supplierBuyingDisabled')
       });
     } catch (err) {
-      toast({ title: 'Failed to update supplier buying status', variant: 'destructive' });
+      toast({ title: t('errors.failedToUpdateSupplierBuyingStatus'), variant: 'destructive' });
     }
   };
 

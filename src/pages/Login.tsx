@@ -32,7 +32,7 @@ export const Login: React.FC = () => {
       if (isSignup) {
         const { error } = await signup(email, password, name);
         if (error) {
-          setError(error.message || 'Signup failed.');
+          setError(error.message || t('errors.signupFailed'));
         } else {
           setSuccess(t('login.accountCreatedSuccess'));
           setIsSignup(false);
@@ -43,13 +43,13 @@ export const Login: React.FC = () => {
       } else {
         const { error } = await login(email, password);
         if (error) {
-          setError(error.message || 'Login failed.');
+          setError(error.message || t('errors.loginFailed'));
         } else {
           await navigate('/role-selection');
         }
       }
     } catch (err) {
-      setError('An unexpected error occurred.');
+      setError(t('errors.unexpectedError'));
     } finally {
       setIsLoading(false);
     }
@@ -61,12 +61,12 @@ export const Login: React.FC = () => {
     try {
       const { error } = await loginWithGoogle();
       if (error) {
-        setError(error.message || 'Google login failed.');
+        setError(error.message || t('errors.googleLoginFailed'));
       } else {
         await navigate('/role-selection');
       }
     } catch (err) {
-      setError('An unexpected error occurred during Google login.');
+      setError(t('errors.unexpectedGoogleError'));
     } finally {
       setIsLoading(false);
     }

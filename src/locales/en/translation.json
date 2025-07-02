@@ -80,6 +80,8 @@
   "addProduct": {
     "title": "Add Product",
     "editProduct": "Edit Product",
+    "backToProducts": "Back to Products",
+    "productInformation": "Product Information",
     "productName": "Product Name",
     "enterProductName": "Enter product name",
     "productCategory": "Product Category",
@@ -90,11 +92,26 @@
     "enterQuantity": "Enter quantity",
     "supplierName": "Supplier Name",
     "enterSupplier": "Enter supplier name",
+    "description": "Description",
+    "enterDescription": "Enter product description",
     "save": "Save",
     "cancel": "Cancel",
     "saving": "Saving...",
+    "updateProduct": "Update Product",
     "productSavedSuccess": "Product saved successfully",
-    "saveFailed": "Failed to save product"
+    "productUpdatedSuccess": "Product updated successfully",
+    "saveFailed": "Failed to save product",
+    "updateFailed": "Update failed",
+    "productNotFound": "Product not found",
+    "requiredFieldsNote": "All fields marked with * are required. Make sure to provide accurate information for proper inventory management.",
+    "validationErrors": {
+      "nameRequired": "Product name is required",
+      "categoryRequired": "Category is required",
+      "priceRequired": "Valid price is required",
+      "quantityRequired": "Valid quantity is required",
+      "supplierRequired": "Supplier is required",
+      "descriptionRequired": "Description is required"
+    }
   },
   
   "common": {
@@ -112,5 +129,22 @@
     "error": "Error",
     "warning": "Warning",
     "info": "Info"
+  },
+  
+  "errors": {
+    "signupFailed": "Signup failed.",
+    "loginFailed": "Login failed.",
+    "googleLoginFailed": "Google login failed.",
+    "unexpectedError": "An unexpected error occurred.",
+    "unexpectedGoogleError": "An unexpected error occurred during Google login.",
+    "roleUpdateFailed": "Failed to update role.",
+    "failedToUpdateBuyingStatus": "Failed to update buying status",
+    "failedToUpdateSupplierBuyingStatus": "Failed to update supplier buying status"
+  },
+  
+  "notFound": {
+    "title": "404",
+    "message": "Oops! Page not found",
+    "returnHome": "Return to Home"
   }
 }
