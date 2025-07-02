@@ -1,0 +1,150 @@
+{
+  "appTitle": "उत्पाद प्रबंधन",
+  "viewProducts": "उत्पाद देखें",
+  "logout": "लॉग आउट",
+  "selectLanguage": "भाषा चुनें",
+  
+  "login": {
+    "title": "उत्पाद प्रबंधन",
+    "welcome": "वापस स्वागत है! जारी रखने के लिए साइन इन करें",
+    "createAccount": "अपना खाता बनाएं",
+    "fullName": "पूरा नाम",
+    "email": "ईमेल",
+    "password": "पासवर्ड",
+    "enterFullName": "अपना पूरा नाम दर्ज करें",
+    "enterEmail": "अपना ईमेल दर्ज करें",
+    "enterPassword": "अपना पासवर्ड दर्ज करें",
+    "signIn": "साइन इन",
+    "createAccountBtn": "खाता बनाएं",
+    "orContinueWith": "या इसके साथ जारी रखें",
+    "continueWithGoogle": "Google के साथ जारी रखें",
+    "alreadyHaveAccount": "पहले से खाता है? साइन इन करें",
+    "dontHaveAccount": "खाता नहीं है? साइन अप करें",
+    "accountCreatedSuccess": "खाता सफलतापूर्वक बनाया गया! कृपया लॉग इन करें।"
+  },
+  
+  "roleSelection": {
+    "selectRole": "अपनी भूमिका चुनें",
+    "manager": "प्रबंधक",
+    "storekeeper": "स्टोर कीपर",
+    "managerDescription": "डैशबोर्ड और एनालिटिक्स सहित पूर्ण पहुंच",
+    "storekeeperDescription": "उत्पादों और इन्वेंटरी का प्रबंधन करें",
+    "continueAs": "इस रूप में जारी रखें",
+    "loading": "लोड हो रहा है..."
+  },
+  
+  "dashboard": {
+    "title": "डैशबोर्ड",
+    "estimatedEarning": "अनुमानित कमाई",
+    "estimatedSale": "अनुमानित बिक्री",
+    "storePerformance": "स्टोर प्रदर्शन",
+    "trafficDetail": "ट्रैफिक विवरण",
+    "newsletterSubscribers": "न्यूज़लेटर सब्स्क्राइबर",
+    "allTraffic": "सभी ट्रैफिक",
+    "yourStore": "आपका स्टोर",
+    "userSubscriber": "उपयोगकर्ता सब्स्क्राइबर",
+    "unsubscribe": "अनसब्स्क्राइब",
+    "fromLastMonth": "पिछले महीने से",
+    "comparedToPrevious": "पिछले की तुलना में"
+  },
+  
+  "products": {
+    "title": "उत्पाद",
+    "inventoryList": "इन्वेंटरी सूची",
+    "name": "नाम",
+    "category": "श्रेणी",
+    "price": "मूल्य",
+    "quantity": "मात्रा",
+    "supplier": "आपूर्तिकर्ता",
+    "actions": "कार्य",
+    "noProductsFound": "कोई उत्पाद नहीं मिला।",
+    "deleteConfirm": "क्या आप वास्तव में इस उत्पाद को हटाना चाहते हैं?",
+    "productDeletedSuccess": "उत्पाद सफलतापूर्वक हटा दिया गया",
+    "deleteFailed": "हटाना असफल",
+    "failedToLoadProducts": "उत्पाद लोड करने में असफल",
+    "groupBy": "समूह बनाएं",
+    "groupByCategory": "श्रेणी के अनुसार समूह बनाएं",
+    "groupBySupplier": "आपूर्तिकर्ता के अनुसार समूह बनाएं",
+    "clearGrouping": "समूह साफ़ करें",
+    "totalItems": "कुल वस्तुएं",
+    "availableForBuying": "खरीदारी के लिए उपलब्ध",
+    "buyingEnabled": "खरीदारी सक्षम",
+    "buyingDisabled": "खरीदारी निष्क्रिय",
+    "toggleBuyingStatus": "खरीदारी उपलब्धता टॉगल करें",
+    "supplierBuyingEnabled": "आपूर्तिकर्ता खरीदारी सक्षम",
+    "supplierBuyingDisabled": "आपूर्तिकर्ता खरीदारी निष्क्रिय",
+    "productBuyingEnabled": "उत्पाद खरीदारी सक्षम",
+    "productBuyingDisabled": "उत्पाद खरीदारी निष्क्रिय"
+  },
+  
+  "addProduct": {
+    "title": "उत्पाद जोड़ें",
+    "editProduct": "उत्पाद संपादित करें",
+    "backToProducts": "उत्पादों पर वापस जाएं",
+    "productInformation": "उत्पाद की जानकारी",
+    "productName": "उत्पाद का नाम",
+    "enterProductName": "उत्पाद का नाम दर्ज करें",
+    "productCategory": "उत्पाद श्रेणी",
+    "enterCategory": "श्रेणी दर्ज करें",
+    "productPrice": "उत्पाद मूल्य",
+    "enterPrice": "मूल्य दर्ज करें",
+    "productQuantity": "उत्पाद मात्रा",
+    "enterQuantity": "मात्रा दर्ज करें",
+    "supplierName": "आपूर्तिकर्ता का नाम",
+    "enterSupplier": "आपूर्तिकर्ता का नाम दर्ज करें",
+    "description": "विवरण",
+    "enterDescription": "उत्पाद विवरण दर्ज करें",
+    "save": "सेव करें",
+    "cancel": "रद्द करें",
+    "saving": "सेव हो रहा है...",
+    "updateProduct": "उत्पाद अपडेट करें",
+    "productSavedSuccess": "उत्पाद सफलतापूर्वक सेव किया गया",
+    "productUpdatedSuccess": "उत्पाद सफलतापूर्वक अपडेट किया गया",
+    "saveFailed": "उत्पाद सेव करने में असफल",
+    "updateFailed": "अपडेट असफल",
+    "productNotFound": "उत्पाद नहीं मिला",
+    "requiredFieldsNote": "* से चिह्नित सभी फ़ील्ड आवश्यक हैं। उचित इन्वेंटरी प्रबंधन के लिए सटीक जानकारी प्रदान करना सुनिश्चित करें।",
+    "validationErrors": {
+      "nameRequired": "उत्पाद का नाम आवश्यक है",
+      "categoryRequired": "श्रेणी आवश्यक है",
+      "priceRequired": "वैध मूल्य आवश्यक है",
+      "quantityRequired": "वैध मात्रा आवश्यक है",
+      "supplierRequired": "आपूर्तिकर्ता आवश्यक है",
+      "descriptionRequired": "विवरण आवश्यक है"
+    }
+  },
+  
+  "common": {
+    "loading": "लोड हो रहा है...",
+    "save": "सेव करें",
+    "cancel": "रद्द करें",
+    "edit": "संपादित करें",
+    "delete": "हटाएं",
+    "add": "जोड़ें",
+    "search": "खोजें",
+    "filter": "फिल्टर",
+    "export": "निर्यात",
+    "import": "आयात",
+    "success": "सफल",
+    "error": "त्रुटि",
+    "warning": "चेतावनी",
+    "info": "जानकारी"
+  },
+  
+  "errors": {
+    "signupFailed": "साइनअप असफल।",
+    "loginFailed": "लॉगिन असफल।",
+    "googleLoginFailed": "Google लॉगिन असफल।",
+    "unexpectedError": "एक अनपेक्षित त्रुटि हुई।",
+    "unexpectedGoogleError": "Google लॉगिन के दौरान एक अनपेक्षित त्रुटि हुई।",
+    "roleUpdateFailed": "भूमिका अपडेट करने में असफल।",
+    "failedToUpdateBuyingStatus": "खरीदारी स्थिति अपडेट करने में असफल",
+    "failedToUpdateSupplierBuyingStatus": "आपूर्तिकर्ता खरीदारी स्थिति अपडेट करने में असफल"
+  },
+  
+  "notFound": {
+    "title": "404",
+    "message": "उफ्फ़! पेज नहीं मिला",
+    "returnHome": "होम पर वापस जाएं"
+  }
+}

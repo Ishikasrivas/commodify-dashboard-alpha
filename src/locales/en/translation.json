@@ -1,0 +1,150 @@
+{
+  "appTitle": "Commodities Management",
+  "viewProducts": "View Products",
+  "logout": "Logout",
+  "selectLanguage": "Select Language",
+  
+  "login": {
+    "title": "Commodities Management",
+    "welcome": "Welcome back! Sign in to continue",
+    "createAccount": "Create your account",
+    "fullName": "Full Name",
+    "email": "Email",
+    "password": "Password",
+    "enterFullName": "Enter your full name",
+    "enterEmail": "Enter your email",
+    "enterPassword": "Enter your password",
+    "signIn": "Sign In",
+    "createAccountBtn": "Create Account",
+    "orContinueWith": "Or continue with",
+    "continueWithGoogle": "Continue with Google",
+    "alreadyHaveAccount": "Already have an account? Sign in",
+    "dontHaveAccount": "Don't have an account? Sign up",
+    "accountCreatedSuccess": "Account created successfully! Please log in."
+  },
+  
+  "roleSelection": {
+    "selectRole": "Choose Your Role",
+    "manager": "Manager",
+    "storekeeper": "Store Keeper",
+    "managerDescription": "Full access including dashboard and analytics",
+    "storekeeperDescription": "Manage products and inventory",
+    "continueAs": "Continue as",
+    "loading": "Loading..."
+  },
+  
+  "dashboard": {
+    "title": "Dashboard",
+    "estimatedEarning": "Estimated Earning",
+    "estimatedSale": "Estimated Sale",
+    "storePerformance": "Store Performance",
+    "trafficDetail": "Traffic Detail",
+    "newsletterSubscribers": "Newsletter Subscribers",
+    "allTraffic": "All Traffic",
+    "yourStore": "Your Store",
+    "userSubscriber": "User Subscriber",
+    "unsubscribe": "Unsubscribe",
+    "fromLastMonth": "from last month",
+    "comparedToPrevious": "compared to previous"
+  },
+  
+  "products": {
+    "title": "Products",
+    "inventoryList": "Inventory List",
+    "name": "Name",
+    "category": "Category",
+    "price": "Price",
+    "quantity": "Quantity",
+    "supplier": "Supplier",
+    "actions": "Actions",
+    "noProductsFound": "No products found.",
+    "deleteConfirm": "Are you sure you want to delete this product?",
+    "productDeletedSuccess": "Product deleted successfully",
+    "deleteFailed": "Delete failed",
+    "failedToLoadProducts": "Failed to load products",
+    "groupBy": "Group by",
+    "groupByCategory": "Group by Category",
+    "groupBySupplier": "Group by Supplier",
+    "clearGrouping": "Clear Grouping",
+    "totalItems": "Total Items",
+    "availableForBuying": "Available for Buying",
+    "buyingEnabled": "Buying Enabled",
+    "buyingDisabled": "Buying Disabled",
+    "toggleBuyingStatus": "Toggle buying availability",
+    "supplierBuyingEnabled": "Supplier buying enabled",
+    "supplierBuyingDisabled": "Supplier buying disabled",
+    "productBuyingEnabled": "Product buying enabled",
+    "productBuyingDisabled": "Product buying disabled"
+  },
+  
+  "addProduct": {
+    "title": "Add Product",
+    "editProduct": "Edit Product",
+    "backToProducts": "Back to Products",
+    "productInformation": "Product Information",
+    "productName": "Product Name",
+    "enterProductName": "Enter product name",
+    "productCategory": "Product Category",
+    "enterCategory": "Enter category",
+    "productPrice": "Product Price",
+    "enterPrice": "Enter price",
+    "productQuantity": "Product Quantity",
+    "enterQuantity": "Enter quantity",
+    "supplierName": "Supplier Name",
+    "enterSupplier": "Enter supplier name",
+    "description": "Description",
+    "enterDescription": "Enter product description",
+    "save": "Save",
+    "cancel": "Cancel",
+    "saving": "Saving...",
+    "updateProduct": "Update Product",
+    "productSavedSuccess": "Product saved successfully",
+    "productUpdatedSuccess": "Product updated successfully",
+    "saveFailed": "Failed to save product",
+    "updateFailed": "Update failed",
+    "productNotFound": "Product not found",
+    "requiredFieldsNote": "All fields marked with * are required. Make sure to provide accurate information for proper inventory management.",
+    "validationErrors": {
+      "nameRequired": "Product name is required",
+      "categoryRequired": "Category is required",
+      "priceRequired": "Valid price is required",
+      "quantityRequired": "Valid quantity is required",
+      "supplierRequired": "Supplier is required",
+      "descriptionRequired": "Description is required"
+    }
+  },
+  
+  "common": {
+    "loading": "Loading...",
+    "save": "Save",
+    "cancel": "Cancel",
+    "edit": "Edit",
+    "delete": "Delete",
+    "add": "Add",
+    "search": "Search",
+    "filter": "Filter",
+    "export": "Export",
+    "import": "Import",
+    "success": "Success",
+    "error": "Error",
+    "warning": "Warning",
+    "info": "Info"
+  },
+  
+  "errors": {
+    "signupFailed": "Signup failed.",
+    "loginFailed": "Login failed.",
+    "googleLoginFailed": "Google login failed.",
+    "unexpectedError": "An unexpected error occurred.",
+    "unexpectedGoogleError": "An unexpected error occurred during Google login.",
+    "roleUpdateFailed": "Failed to update role.",
+    "failedToUpdateBuyingStatus": "Failed to update buying status",
+    "failedToUpdateSupplierBuyingStatus": "Failed to update supplier buying status"
+  },
+  
+  "notFound": {
+    "title": "404",
+    "message": "Oops! Page not found",
+    "returnHome": "Return to Home"
+  }
+}

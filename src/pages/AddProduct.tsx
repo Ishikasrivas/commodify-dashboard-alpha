@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
@@ -11,9 +10,10 @@ import { ArrowLeft, Save, Loader2 } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
 import { db } from '@/firebase/firebase';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
-
+import { useTranslation } from 'react-i18next';
 
 export const AddProduct: React.FC = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
@@ -41,16 +41,16 @@ export const AddProduct: React.FC = () => {
   const validateForm = () => {
     const newErrors: Record<string, string> = {};
 
-    if (!formData.name.trim()) newErrors.name = 'Product name is required';
-    if (!formData.category) newErrors.category = 'Category is required';
+    if (!formData.name.trim()) newErrors.name = t('addProduct.validationErrors.nameRequired');
+    if (!formData.category) newErrors.category = t('addProduct.validationErrors.categoryRequired');
     if (!formData.price || isNaN(Number(formData.price)) || Number(formData.price) <= 0) {
-      newErrors.price = 'Valid price is required';
+      newErrors.price = t('addProduct.validationErrors.priceRequired');
     }
     if (!formData.quantity || isNaN(Number(formData.quantity)) || Number(formData.quantity) < 0) {
-      newErrors.quantity = 'Valid quantity is required';
+      newErrors.quantity = t('addProduct.validationErrors.quantityRequired');
     }
-    if (!formData.supplier.trim()) newErrors.supplier = 'Supplier is required';
-    if (!formData.description.trim()) newErrors.description = 'Description is required';
+    if (!formData.supplier.trim()) newErrors.supplier = t('addProduct.validationErrors.supplierRequired');
+    if (!formData.description.trim()) newErrors.description = t('addProduct.validationErrors.descriptionRequired');
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -64,48 +64,47 @@ export const AddProduct: React.FC = () => {
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
-  e.preventDefault();
+    e.preventDefault();
 
-  if (!validateForm()) return;
-  setIsLoading(true);
+    if (!validateForm()) return;
+    setIsLoading(true);
 
-  try {
-    const status =
-      Number(formData.quantity) === 0
-        ? 'out-of-stock'
-        : Number(formData.quantity) <= 5
-        ? 'low-stock'
-        : 'in-stock';
+    try {
+      const status =
+        Number(formData.quantity) === 0
+          ? 'out-of-stock'
+          : Number(formData.quantity) <= 5
+          ? 'low-stock'
+          : 'in-stock';
 
-    await addDoc(collection(db, 'products'), {
-      name: formData.name.trim(),
-      category: formData.category,
-      price: Number(formData.price),
-      quantity: Number(formData.quantity),
-      supplier: formData.supplier.trim(),
-      description: formData.description.trim(),
-      updated_at: serverTimestamp(),
-      status: status,
-    });
+      await addDoc(collection(db, 'products'), {
+        name: formData.name.trim(),
+        category: formData.category,
+        price: Number(formData.price),
+        quantity: Number(formData.quantity),
+        supplier: formData.supplier.trim(),
+        description: formData.description.trim(),
+        updated_at: serverTimestamp(),
+        status: status,
+      });
 
-    toast({
-      title: 'Product Added Successfully',
-      description: `${formData.name} has been added to the inventory.`,
-    });
+      toast({
+        title: t('addProduct.productSavedSuccess'),
+        description: `${formData.name} has been added to the inventory.`,
+      });
 
-    navigate('/products');
-  } catch (error) {
-    console.error('Error adding product:', error);
-    toast({
-      title: 'Error',
-      description: 'Failed to add product. Please try again.',
-      variant: 'destructive',
-    });
-  } finally {
-    setIsLoading(false);
-  }
-};
-
+      navigate('/products');
+    } catch (error) {
+      console.error('Error adding product:', error);
+      toast({
+        title: t('common.error'),
+        description: t('addProduct.saveFailed'),
+        variant: 'destructive',
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <div className="p-6 max-w-2xl mx-auto space-y-6">
@@ -117,25 +116,25 @@ export const AddProduct: React.FC = () => {
           className="flex items-center gap-2"
         >
           <ArrowLeft className="h-4 w-4" />
-          Back to Products
+          {t('addProduct.backToProducts')}
         </Button>
-        <h1 className="text-3xl font-bold text-foreground">Add New Product</h1>
+        <h1 className="text-3xl font-bold text-foreground">{t('addProduct.title')}</h1>
       </div>
 
       <Card>
         <CardHeader>
-          <CardTitle>Product Information</CardTitle>
+          <CardTitle>{t('addProduct.productInformation')}</CardTitle>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label htmlFor="name">Product Name *</Label>
+                <Label htmlFor="name">{t('addProduct.productName')} *</Label>
                 <Input
                   id="name"
                   value={formData.name}
                   onChange={(e) => handleInputChange('name', e.target.value)}
-                  placeholder="Enter product name"
+                  placeholder={t('addProduct.enterProductName')}
                   className={errors.name ? 'border-red-500' : ''}
                 />
                 {errors.name && (
@@ -144,7 +143,7 @@ export const AddProduct: React.FC = () => {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="category">Category *</Label>
+                <Label htmlFor="category">{t('addProduct.productCategory')} *</Label>
                 <select
                   id="category"
                   value={formData.category}
@@ -153,7 +152,7 @@ export const AddProduct: React.FC = () => {
                     errors.category ? 'border-red-500' : 'border-input'
                   }`}
                 >
-                  <option value="">Select a category</option>
+                  <option value="">{t('addProduct.enterCategory')}</option>
                   {categories.map(category => (
                     <option key={category} value={category}>{category}</option>
                   ))}
@@ -164,14 +163,14 @@ export const AddProduct: React.FC = () => {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="price">Price ($) *</Label>
+                <Label htmlFor="price">{t('addProduct.productPrice')} ($) *</Label>
                 <Input
                   id="price"
                   type="number"
                   step="0.01"
                   value={formData.price}
                   onChange={(e) => handleInputChange('price', e.target.value)}
-                  placeholder="0.00"
+                  placeholder={t('addProduct.enterPrice')}
                   className={errors.price ? 'border-red-500' : ''}
                 />
                 {errors.price && (
@@ -180,13 +179,13 @@ export const AddProduct: React.FC = () => {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="quantity">Quantity *</Label>
+                <Label htmlFor="quantity">{t('addProduct.productQuantity')} *</Label>
                 <Input
                   id="quantity"
                   type="number"
                   value={formData.quantity}
                   onChange={(e) => handleInputChange('quantity', e.target.value)}
-                  placeholder="0"
+                  placeholder={t('addProduct.enterQuantity')}
                   className={errors.quantity ? 'border-red-500' : ''}
                 />
                 {errors.quantity && (
@@ -196,12 +195,12 @@ export const AddProduct: React.FC = () => {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="supplier">Supplier *</Label>
+              <Label htmlFor="supplier">{t('addProduct.supplierName')} *</Label>
               <Input
                 id="supplier"
                 value={formData.supplier}
                 onChange={(e) => handleInputChange('supplier', e.target.value)}
-                placeholder="Enter supplier name"
+                placeholder={t('addProduct.enterSupplier')}
                 className={errors.supplier ? 'border-red-500' : ''}
               />
               {errors.supplier && (
@@ -210,12 +209,12 @@ export const AddProduct: React.FC = () => {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="description">Description *</Label>
+              <Label htmlFor="description">{t('addProduct.description')} *</Label>
               <Textarea
                 id="description"
                 value={formData.description}
                 onChange={(e) => handleInputChange('description', e.target.value)}
-                placeholder="Enter product description"
+                placeholder={t('addProduct.enterDescription')}
                 rows={4}
                 className={errors.description ? 'border-red-500' : ''}
               />
@@ -226,7 +225,7 @@ export const AddProduct: React.FC = () => {
 
             <Alert>
               <AlertDescription>
-                All fields marked with * are required. Make sure to provide accurate information for proper inventory management.
+                {t('addProduct.requiredFieldsNote')}
               </AlertDescription>
             </Alert>
 
@@ -238,7 +237,7 @@ export const AddProduct: React.FC = () => {
                 onClick={() => navigate('/products')}
                 disabled={isLoading}
               >
-                Cancel
+                {t('addProduct.cancel')}
               </Button>
               <Button
                 type="submit"
@@ -248,12 +247,12 @@ export const AddProduct: React.FC = () => {
                 {isLoading ? (
                   <>
                     <Loader2 className="h-4 w-4 animate-spin" />
-                    Adding Product...
+                    {t('addProduct.saving')}
                   </>
                 ) : (
                   <>
                     <Save className="h-4 w-4" />
-                    Add Product
+                    {t('addProduct.save')}
                   </>
                 )}
               </Button>
