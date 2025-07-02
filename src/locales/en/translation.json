@@ -1,7 +1,6 @@
 {
   "appTitle": "Commodities Management",
   "viewProducts": "View Products",
-  "addProduct": "Add Product",
   "logout": "Logout",
   "selectLanguage": "Select Language",
   
@@ -62,7 +61,12 @@
     "deleteConfirm": "Are you sure you want to delete this product?",
     "productDeletedSuccess": "Product deleted successfully",
     "deleteFailed": "Delete failed",
-    "failedToLoadProducts": "Failed to load products"
+    "failedToLoadProducts": "Failed to load products",
+    "groupBy": "Group by",
+    "groupByCategory": "Group by Category",
+    "groupBySupplier": "Group by Supplier",
+    "clearGrouping": "Clear Grouping",
+    "totalItems": "Total Items"
   },
   
   "addProduct": {

@@ -63,7 +63,12 @@
     "deleteConfirm": "क्या आप वास्तव में इस उत्पाद को हटाना चाहते हैं?",
     "productDeletedSuccess": "उत्पाद सफलतापूर्वक हटा दिया गया",
     "deleteFailed": "हटाना असफल",
-    "failedToLoadProducts": "उत्पाद लोड करने में असफल"
+    "failedToLoadProducts": "उत्पाद लोड करने में असफल",
+    "groupBy": "समूह बनाएं",
+    "groupByCategory": "श्रेणी के अनुसार समूह बनाएं",
+    "groupBySupplier": "आपूर्तिकर्ता के अनुसार समूह बनाएं",
+    "clearGrouping": "समूह साफ़ करें",
+    "totalItems": "कुल वस्तुएं"
   },
   
   "addProduct": {
