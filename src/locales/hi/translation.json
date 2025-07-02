@@ -68,7 +68,15 @@
     "groupByCategory": "श्रेणी के अनुसार समूह बनाएं",
     "groupBySupplier": "आपूर्तिकर्ता के अनुसार समूह बनाएं",
     "clearGrouping": "समूह साफ़ करें",
-    "totalItems": "कुल वस्तुएं"
+    "totalItems": "कुल वस्तुएं",
+    "availableForBuying": "खरीदारी के लिए उपलब्ध",
+    "buyingEnabled": "खरीदारी सक्षम",
+    "buyingDisabled": "खरीदारी निष्क्रिय",
+    "toggleBuyingStatus": "खरीदारी उपलब्धता टॉगल करें",
+    "supplierBuyingEnabled": "आपूर्तिकर्ता खरीदारी सक्षम",
+    "supplierBuyingDisabled": "आपूर्तिकर्ता खरीदारी निष्क्रिय",
+    "productBuyingEnabled": "उत्पाद खरीदारी सक्षम",
+    "productBuyingDisabled": "उत्पाद खरीदारी निष्क्रिय"
   },
   
   "addProduct": {

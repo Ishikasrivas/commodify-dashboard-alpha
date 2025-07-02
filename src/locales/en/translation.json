@@ -66,7 +66,15 @@
     "groupByCategory": "Group by Category",
     "groupBySupplier": "Group by Supplier",
     "clearGrouping": "Clear Grouping",
-    "totalItems": "Total Items"
+    "totalItems": "Total Items",
+    "availableForBuying": "Available for Buying",
+    "buyingEnabled": "Buying Enabled",
+    "buyingDisabled": "Buying Disabled",
+    "toggleBuyingStatus": "Toggle buying availability",
+    "supplierBuyingEnabled": "Supplier buying enabled",
+    "supplierBuyingDisabled": "Supplier buying disabled",
+    "productBuyingEnabled": "Product buying enabled",
+    "productBuyingDisabled": "Product buying disabled"
   },
   
   "addProduct": {

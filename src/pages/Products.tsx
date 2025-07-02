@@ -4,13 +4,16 @@ import {
   collection,
   getDocs,
   deleteDoc,
-  doc
+  doc,
+  updateDoc,
+  writeBatch
 } from 'firebase/firestore';
 import { db } from '@/firebase/firebase';
 import { Button } from '@/components/ui/button';
+import { Switch } from '@/components/ui/switch';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { toast } from '@/hooks/use-toast';
-import { Loader2, Pencil, Trash2, Plus, Layers, X, ChevronDown, ChevronRight } from 'lucide-react';
+import { Loader2, Pencil, Trash2, Plus, Layers, X, ChevronDown, ChevronRight, ShoppingCart } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
 interface Product {
@@ -21,6 +24,7 @@ interface Product {
   quantity: number;
   supplier: string;
   status?: string;
+  availableForBuying?: boolean;
 }
 
 type GroupBy = 'none' | 'category' | 'supplier';
@@ -31,6 +35,7 @@ const Products: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [groupBy, setGroupBy] = useState<GroupBy>('none');
   const [expandedGroups, setExpandedGroups] = useState<Set<string>>(new Set());
+  const [supplierBuyingStatus, setSupplierBuyingStatus] = useState<Record<string, boolean>>({});
   const navigate = useNavigate();
 
   const fetchProducts = async () => {
@@ -38,10 +43,23 @@ const Products: React.FC = () => {
       const snapshot = await getDocs(collection(db, 'products'));
       const data: Product[] = snapshot.docs.map((doc) => ({
         id: doc.id,
+        availableForBuying: true, // Default to true for existing products
         ...doc.data(),
       })) as Product[];
 
       setProducts(data);
+      
+      // Initialize supplier buying status
+      const supplierStatus: Record<string, boolean> = {};
+      data.forEach(product => {
+        if (!supplierStatus.hasOwnProperty(product.supplier)) {
+          // Set supplier status based on whether any product from this supplier is available for buying
+          supplierStatus[product.supplier] = data
+            .filter(p => p.supplier === product.supplier)
+            .some(p => p.availableForBuying !== false);
+        }
+      });
+      setSupplierBuyingStatus(supplierStatus);
     } catch (err) {
       toast({ title: t('products.failedToLoadProducts'), variant: 'destructive' });
     } finally {
@@ -62,6 +80,63 @@ const Products: React.FC = () => {
       toast({ title: t('products.productDeletedSuccess') });
     } catch (err) {
       toast({ title: t('products.deleteFailed'), variant: 'destructive' });
+    }
+  };
+
+  const handleProductBuyingToggle = async (productId: string, currentStatus: boolean) => {
+    try {
+      const newStatus = !currentStatus;
+      await updateDoc(doc(db, 'products', productId), {
+        availableForBuying: newStatus
+      });
+
+      setProducts(prev => prev.map(product => 
+        product.id === productId 
+          ? { ...product, availableForBuying: newStatus }
+          : product
+      ));
+
+      toast({ 
+        title: newStatus ? t('products.productBuyingEnabled') : t('products.productBuyingDisabled')
+      });
+    } catch (err) {
+      toast({ title: 'Failed to update buying status', variant: 'destructive' });
+    }
+  };
+
+  const handleSupplierBuyingToggle = async (supplier: string, currentStatus: boolean) => {
+    try {
+      const newStatus = !currentStatus;
+      const batch = writeBatch(db);
+      
+      // Get all products from this supplier
+      const supplierProducts = products.filter(p => p.supplier === supplier);
+      
+      // Update all products from this supplier
+      supplierProducts.forEach(product => {
+        const productRef = doc(db, 'products', product.id);
+        batch.update(productRef, { availableForBuying: newStatus });
+      });
+
+      await batch.commit();
+
+      // Update local state
+      setProducts(prev => prev.map(product => 
+        product.supplier === supplier 
+          ? { ...product, availableForBuying: newStatus }
+          : product
+      ));
+
+      setSupplierBuyingStatus(prev => ({
+        ...prev,
+        [supplier]: newStatus
+      }));
+
+      toast({ 
+        title: newStatus ? t('products.supplierBuyingEnabled') : t('products.supplierBuyingDisabled')
+      });
+    } catch (err) {
+      toast({ title: 'Failed to update supplier buying status', variant: 'destructive' });
     }
   };
 
@@ -121,6 +196,19 @@ const Products: React.FC = () => {
                   {groupProducts.length} {t('products.totalItems')}
                 </span>
               </div>
+              
+              {/* Supplier-level toggle when grouped by supplier */}
+              {groupBy === 'supplier' && (
+                <div className="flex items-center gap-2 mr-4" onClick={(e) => e.stopPropagation()}>
+                  <ShoppingCart className="h-4 w-4 text-muted-foreground" />
+                  <span className="text-sm text-muted-foreground">{t('products.availableForBuying')}:</span>
+                  <Switch
+                    checked={supplierBuyingStatus[groupKey] || false}
+                    onCheckedChange={() => handleSupplierBuyingToggle(groupKey, supplierBuyingStatus[groupKey] || false)}
+                    title={t('products.toggleBuyingStatus')}
+                  />
+                </div>
+              )}
             </div>
             
             {expandedGroups.has(groupKey) && (
@@ -133,6 +221,7 @@ const Products: React.FC = () => {
                       <th className="p-2">{t('products.price')}</th>
                       <th className="p-2">{t('products.quantity')}</th>
                       {groupBy !== 'supplier' && <th className="p-2">{t('products.supplier')}</th>}
+                      <th className="p-2">{t('products.availableForBuying')}</th>
                       <th className="p-2">{t('products.actions')}</th>
                     </tr>
                   </thead>
@@ -144,6 +233,13 @@ const Products: React.FC = () => {
                         <td className="p-2">${product.price.toFixed(2)}</td>
                         <td className="p-2">{product.quantity}</td>
                         {groupBy !== 'supplier' && <td className="p-2">{product.supplier}</td>}
+                        <td className="p-2">
+                          <Switch
+                            checked={product.availableForBuying !== false}
+                            onCheckedChange={() => handleProductBuyingToggle(product.id, product.availableForBuying !== false)}
+                            title={t('products.toggleBuyingStatus')}
+                          />
+                        </td>
                         <td className="p-2 flex gap-2">
                           <Button
                             size="sm"
@@ -207,6 +303,7 @@ const Products: React.FC = () => {
               </Button>
             </div>
           </th>
+          <th className="p-2">{t('products.availableForBuying')}</th>
           <th className="p-2">{t('products.actions')}</th>
         </tr>
       </thead>
@@ -218,6 +315,13 @@ const Products: React.FC = () => {
             <td className="p-2">${product.price.toFixed(2)}</td>
             <td className="p-2">{product.quantity}</td>
             <td className="p-2">{product.supplier}</td>
+            <td className="p-2">
+              <Switch
+                checked={product.availableForBuying !== false}
+                onCheckedChange={() => handleProductBuyingToggle(product.id, product.availableForBuying !== false)}
+                title={t('products.toggleBuyingStatus')}
+              />
+            </td>
             <td className="p-2 flex gap-2">
               <Button
                 size="sm"
